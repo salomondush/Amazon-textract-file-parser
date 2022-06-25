@@ -1,0 +1,33 @@
+{
+  "name": "parse-file-server",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon src/index.js"
+	},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salomondush/Amazon-textract-file-parser.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salomondush/Amazon-textract-file-parser/issues"
+  },
+  "homepage": "https://github.com/salomondush/Amazon-textract-file-parser#readme",
+  "dependencies": {
+		"@aws-sdk/client-textract": "^3.112.0",
+		"aws-sdk": "^2.1162.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.1",
+		"express": "^4.18.1",
+		"express-fileupload": "^1.4.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.18"
+	}
+}
