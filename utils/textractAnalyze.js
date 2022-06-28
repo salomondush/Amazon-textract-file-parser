@@ -3,14 +3,13 @@ import fs from 'fs';
 // Import required AWS SDK clients and commands for Node.js
 import { AnalyzeDocumentCommand } from "@aws-sdk/client-textract";
 import { TextractClient } from "@aws-sdk/client-textract";
+import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 
 // Set the AWS Region.
-const REGION = "us-west-2"; //e.g. "us-east-1"
+const REGION = process.env.REGION; //e.g. "us-east-1"
 // Create SNS service object.
 const textractClient = new TextractClient({ region: REGION });
 
-const bucket = 'makemeals'
-const photo = 'targetrece.jpeg'
 
 const get_text = (result, blocksmap) => {
     let text = "";
@@ -111,7 +110,6 @@ export default async function analyze_document_text(params){
 		const response = await textractClient.send(analyzeDoc);
 
         var csv = get_table_csv_results(response);
-		// write csv to an output file
         fs.writeFileSync("output.csv", csv);
 
 		return csv; // For unit tests.
