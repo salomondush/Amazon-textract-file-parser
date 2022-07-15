@@ -10,7 +10,12 @@ const REGION = process.env.REGION; //e.g. "us-east-1"
 // Create SNS service object.
 const textractClient = new TextractClient({ region: REGION });
 
-
+/**
+ *  Get the text from a given cell block
+ * @param {*} result 
+ * @param {*} blocksmap 
+ * @returns 
+ */
 const get_text = (result, blocksmap) => {
     let text = "";
     if ("Relationships" in result && result.Relationships !== undefined){
@@ -34,6 +39,12 @@ const get_text = (result, blocksmap) => {
     return text;
 }
 
+/**
+ * Get individial rows with columns included from the table result
+ * @param {*} table_result 
+ * @param {*} blocksmap 
+ * @returns 
+ */
 const get_rows_columns_map = (table_result, blocksmap) => {
     let rows = {};
     if ("Relationships" in table_result && table_result.Relationships !== 
@@ -59,6 +70,14 @@ blocksmap);
 }
 
 
+/**
+ * Generate a csv string from the table result. 
+ * Takes the table result and processses it to generate a csv string
+ * @param {*} table_result 
+ * @param {*} blocks_map 
+ * @param {*} table_index 
+ * @returns 
+ */
 const generate_table_csv = (table_result, blocks_map, table_index) => {
     let csv = "";
     let rows = get_rows_columns_map(table_result, blocks_map);
@@ -77,6 +96,11 @@ const generate_table_csv = (table_result, blocks_map, table_index) => {
     return csv;
 }
 
+/**
+ * Parse the textract result and return a csv string
+ * @param {*} response 
+ * @returns 
+ */
 const get_table_csv_results = (response) => {
     var blocks = response.Blocks;
 
@@ -103,8 +127,12 @@ const get_table_csv_results = (response) => {
 }
 
 
+/**
+ * Analyze document text using Textract and parse the response to CSV
+ * @param {*} params 
+ * @returns 
+ */
 export default async function analyze_document_text(params){
-
 	try {
 		const analyzeDoc = new AnalyzeDocumentCommand(params);
 		const response = await textractClient.send(analyzeDoc);
