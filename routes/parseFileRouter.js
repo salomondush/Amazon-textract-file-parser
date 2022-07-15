@@ -7,6 +7,11 @@ import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-do
 
 const s3 = new AWS.S3();
 
+/**
+ * Endpoint for parsing an image file and returning the text
+ * 
+ * Uploads the image file to S3 and then calls the textractAnalyze function to get the text
+ */
 export default parseFileRouter.post("/analyse", async function(req, res){
     const bucket_name = process.env.AWS_BUCKET_NAME;
 
